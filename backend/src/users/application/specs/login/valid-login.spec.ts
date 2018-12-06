@@ -9,7 +9,7 @@ import { ILoginViewModel } from '../../viewmodels';
 
 describe('User Login Integration', function() {
     describe('Valid Login', function() {
-        it('should return true', async function() {
+        it('should return the user', async function() {
             const userData = await getUserData();
             const usersRepository = new UsersRepositoryMock();
             const getAll = sinon.stub(usersRepository, 'getAll');
@@ -17,7 +17,7 @@ describe('User Login Integration', function() {
 
             const loginCommand = new LoginCommand(usersRepository);
             const viewModel: ILoginViewModel = {
-                email: 'test@user.com',
+                email: 'user@test.com',
                 password: 'password'
             };
 
