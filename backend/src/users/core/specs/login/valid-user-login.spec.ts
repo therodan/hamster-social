@@ -9,7 +9,7 @@ describe('User Login', function() {
             const userData = await getUserData();
             const userAggregate = new UserAggregate(userData);
 
-            const success = await userAggregate.loginUser('test@test.com', '');
+            const success = await userAggregate.loginUser('user@test.com', 'password');
 
             expect(success).to.be.equal(true);
         });

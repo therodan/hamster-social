@@ -1,8 +1,8 @@
 import 'mocha';
 import { expect } from 'chai';
-import { UserAggregate, INewUser } from '../../model';
+import { UserAggregate } from '../../model';
 import { getUserData } from '../mocks';
-import { IUser } from '../../../../shared/core/entities';
+import { IUser, INewUser } from '../../../../shared/core/entities';
 
 describe('User Registration', function() {
     describe('Valid user registration', async function() {

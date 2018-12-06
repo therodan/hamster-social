@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+import { INewUser } from './new-user.entity';
 
 /**
  * User Entity Interface
@@ -74,5 +75,20 @@ export class User implements IUser {
                 return resolve(same);
             });
         });
+    }
+
+    static async createUser(userData: INewUser) {
+        const user = new User({
+            id: null,
+            name: userData.name,
+            email: userData.email,
+            password: null
+        });
+        const errors = await user.setPassword(userData.password1, userData.password2);
+        if (errors && errors instanceof Error) {
+            throw errors;
+        }
+
+        return user;
     }
 }

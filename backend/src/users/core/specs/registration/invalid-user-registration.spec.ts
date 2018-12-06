@@ -31,8 +31,8 @@ describe('User Registration', function() {
                     await userAggregate.newUser({
                         name: 'Test',
                         email: 'test@test.com',
-                        password1: 'small',
-                        password2: 'small'
+                        password1: 'test',
+                        password2: 'test'
                     });
 
                     throw new Error('Test Failed');
@@ -81,7 +81,7 @@ describe('User Registration', function() {
                 try {
                     await userAggregate.newUser({
                         name: 'Test',
-                        email: 'existing@test.com',
+                        email: 'user@test.com',
                         password1: 'password',
                         password2: 'password'
                     });
