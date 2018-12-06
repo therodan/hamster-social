@@ -1,7 +1,9 @@
-import { getErrorOutputResponse } from '../helpers/index';
-
 export function errorHandler(err, req, res, next) {
     console.error(err);
 
-    return res.status(500).json(getErrorOutputResponse());
+    return res.status(500).json({
+        code: 500,
+        data: null,
+        msg: 'Internal server error'
+    });
 }

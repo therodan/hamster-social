@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 import * as session from 'express-session';
 
 import serverSettings from './settings';
-import { wildcardRouter, errorHandler } from './routes';
+import { wildcardRouter, errorHandler, sessionRouter } from './routes';
 
 const app: Express = express();
 
@@ -28,6 +28,8 @@ app.use(session({
 /**
  * Routing
  */
+app.use(sessionRouter);
+
 // Handle all other routes
 app.use(wildcardRouter);
 

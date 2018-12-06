@@ -2,13 +2,14 @@ import { Result } from '../../../shared/core/entities';
 import { IUsersRepository } from '../repositories';
 import { ILoginViewModel } from '../viewmodels';
 import { UserAggregate } from '../../core/model';
+import { IApplication } from '../../../shared/application/application.meta';
 
 /**
  * Login Command
  *
  * Check users email and password
  */
-export class LoginCommand {
+export class LoginCommand implements IApplication {
     constructor(private usersRepository: IUsersRepository) {}
 
     async execute(viewModel: ILoginViewModel): Promise<Result> {

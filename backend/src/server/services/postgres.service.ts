@@ -1,9 +1,10 @@
 import * as pgp from 'pg-promise';
 
 import settings from '../settings';
+import { PostgresDatabaseAdapter } from './postgres-database-adapter';
 
 // DB singleton
-let db;
+let db: PostgresDatabaseAdapter;
 
 /**
  * Get Postgres DB connection
@@ -11,7 +12,7 @@ let db;
 export function getPostgresDB() {
     if (!db) {
         const postgres = pgp();
-        db = postgres(settings.postgresConnectionString);
+        db = new PostgresDatabaseAdapter(postgres(settings.postgresConnectionString));
     }
 
     return db;
