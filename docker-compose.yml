@@ -1,0 +1,33 @@
+version: "2.1"
+
+services:
+  postgres:
+    image: postgres:9.5
+    volumes: 
+      - /var/lib/postgres/data
+    environment: 
+      POSTGRES_DB: hamster_db
+      POSTGRES_USER: hamster_user
+      POSTGRES_PASSWORD: hamster_pass
+    ports: 
+      - '5432:5432'
+
+  frontend:
+    image: nginx:latest
+    links:
+      - backend
+    volumes:
+      - ./docker/nginx/hamstersocial.local.conf:/etc/nginx/conf.d/hamstersocial.local.conf
+      - ./frontend/dist:/usr/share/nginx/html
+    ports:
+      - "80:80"
+
+  backend:
+    build: ./backend
+    links:
+      - postgres
+    volumes:
+      - ./backend/.env:/server/.env
+      - ./backend/knexfile.js:/server/knexfile.js
+    ports:
+      - "8000:8000"

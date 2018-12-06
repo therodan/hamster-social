@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "declaration": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "target": "es6",
+        "alwaysStrict": true,
+        "typeRoots": [
+            "./node_modules/@types"
+        ],
+        "outDir": "./dist",
+        "sourceMap": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "**/specs/*",
+        "**/*.sample.ts",
+        "node_modules"
+    ]
+}
