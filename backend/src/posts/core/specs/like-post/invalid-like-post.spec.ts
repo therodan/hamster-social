@@ -1,19 +1,17 @@
 import 'mocha';
 import { expect } from 'chai';
-import { getRegisteredUser } from '../../../../shared/core/specs/mocks';
 import { getMockPosts } from '../mocks/posts.mock';
 import { PostsAggregate } from '../../model';
 
-describe('Create Post', function() {
+describe('Like Post', function() {
     describe('Invalid Unlike Post', function() {
-        describe('Post belongs to user', async function() {
-            const user = await getRegisteredUser();
+        describe('Post belongs to user', function() {
             const mockPostData = getMockPosts();
             const posts = new PostsAggregate(mockPostData);
 
             it('should throw an error', function() {
                 try {
-                    posts.toggleLikePost(mockPostData[0].id, user.id);
+                    posts.toggleLikePost(mockPostData[0].id, 1);
 
                     throw new Error('Test invalid');
                 }

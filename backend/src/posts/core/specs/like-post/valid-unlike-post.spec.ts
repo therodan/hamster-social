@@ -1,17 +1,16 @@
 import 'mocha';
 import { expect } from 'chai';
-import { getRegisteredUser } from '../../../../shared/core/specs/mocks';
 import { getMockPosts } from '../mocks/posts.mock';
 import { PostsAggregate } from '../../model';
 
-describe('Create Post', function() {
-    describe('Valid Unlike Post', async function() {
-        const user = await getRegisteredUser(2);
+describe('Like Post', function() {
+    describe('Valid Unlike Post', function() {
         const mockPostData = getMockPosts();
+        mockPostData[0].likes.push(2);  // Simulate like by user 2
         const posts = new PostsAggregate(mockPostData);
 
         it('should return true', function() {
-            const liked = posts.toggleLikePost(mockPostData[0].id, user.id);
+            const liked = posts.toggleLikePost(mockPostData[0].id, 2);
 
             expect(liked).to.be.equal(false);
         });

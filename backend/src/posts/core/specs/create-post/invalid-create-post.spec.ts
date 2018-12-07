@@ -6,9 +6,9 @@ import { getMockPosts } from '../mocks/posts.mock';
 
 describe('Create Post', function() {
     describe('Invalid Post', function() {
-        const posts = new PostsAggregate(getMockPosts());
-
         describe('User is not logged in', function() {
+            const posts = new PostsAggregate(getMockPosts());
+
             it('should return an error "Please log in first"', function() {
                 try {
                     posts.createPost('Test Content', getGuestUser().id);
@@ -20,11 +20,12 @@ describe('Create Post', function() {
             });
         });
 
-        describe('Post does not include any content', function() {
-            it('should return an error "Please include some content"', async function() {
-                try {
-                    const user = await getRegisteredUser();
+        describe('Post does not include any content', async function() {
+            const user = await getRegisteredUser();
+            const posts = new PostsAggregate(getMockPosts());
 
+            it('should return an error "Please include some content"', function() {
+                try {
                     posts.createPost('', user.id);
                 }
                 catch (e) {
