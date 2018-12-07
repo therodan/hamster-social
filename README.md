@@ -1,6 +1,6 @@
 # Hamster Blogging Platform
 
-This is a prototype blogging platform for hamsters. You are able to sign up and posts status for all registered users to see. You can also like other people's posts.
+This is a prototype blogging platform for hamsters. You are able to sign up and posts statuses for all registered users to see. You can also like other people's posts.
 
 This platform is built upon the following technogies:
 
