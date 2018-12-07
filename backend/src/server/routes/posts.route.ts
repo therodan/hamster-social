@@ -45,7 +45,7 @@ postsRouter.route('/posts/:id/like')
         const postsController = new PostsController(postsRepository);
 
         const result = await postsController.toggleLikePost({
-            id: req.params.id,
+            id: +req.params.id,
             userId
         });
 

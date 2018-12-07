@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AuthorisationGuard } from './shared/guards';
 import { ActiveUserService } from './shared/services';
 import { httpInterceptorProviders } from './shared/interceptors';
-import { PageHomeFeedComponent } from './page-homefeed/page-homefeed.component';
+import { PageHomeFeedComponent, PostsResolver, PostsService } from './page-homefeed/';
 import { PageLoginComponent } from './page-login/page-login.component';
 import { PageRegistrationComponent } from './page-registration/page-registration.component';
 import { PageErrorComponent } from './page-error';
@@ -31,7 +31,10 @@ import { AppRoutes } from './app.routing';
     providers: [
         // Guards
         AuthorisationGuard,
+        // Resolvers
+        PostsResolver,
         // Services
+        PostsService,
         ActiveUserService,
         httpInterceptorProviders,
         {

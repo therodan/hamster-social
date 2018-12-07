@@ -6,12 +6,20 @@ export class PostsRepository implements IPostsRepository {
 
     getAll(): Promise<IPost[]> {
         return new Promise((resolve, reject) => {
-            this.db.get(`SELECT id, user_id, content FROM posts`).then(posts => {
+            this.db.get(`SELECT id, user_id, date, content FROM posts`).then(posts => {
                 const promises = [];
 
                 posts.forEach(post => {
-                    promises.push(this.db.get(`SELECT user_id FROM likes WHERE post_id = ?`, post.id).then(results => {
-                        return results.map(result => result.user_id);
+                    promises.push(new Promise((res, rej) => {
+                        this.db.get(`SELECT user_id FROM likes WHERE post_id = $/postId/`, { postId: post.id }).then(results => {
+                            const likes = results.map(result => result.user_id);
+
+                            post.likes = likes;
+
+                            return res(post);
+                        }, err => {
+                            return rej(err);
+                        });
                     }));
                 });
 
@@ -27,16 +35,17 @@ export class PostsRepository implements IPostsRepository {
     }
 
     createPost(post: IPost): Promise<number> {
-        return this.db.execute(`INSERT INTO posts VALUES ($/userId/, $/content/) RETURNING id`, {
+        return this.db.execute(`INSERT INTO posts (user_id, content, date) VALUES ($/userId/, $/content/, $/date/) RETURNING id`, {
             userId: post.user_id,
-            content: post.content
+            content: post.content,
+            date: post.date
         }, queryResult.one).then(data => {
             return +data.id;
         });
     }
 
     likePost(postId: number, userId: number): Promise<void> {
-        return this.db.execute(`INSERT INTO likes VALUES ($/postId/, $/userId/)`, {
+        return this.db.execute(`INSERT INTO likes (post_id, user_id) VALUES ($/postId/, $/userId/)`, {
             postId,
             userId
         });

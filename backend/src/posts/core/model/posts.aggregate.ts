@@ -77,6 +77,7 @@ export class PostsAggregate {
 
         const post: IPost = {
             id: null,
+            date: new Date().toISOString(),
             content: sanitizeHtml(content),
             user_id: userId,
             likes: []
