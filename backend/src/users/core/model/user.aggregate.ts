@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 import { User, INewUser } from '../../../shared/core/entities';
-import { newUserSchema } from './schemas';
+import { newUserSchema, loginSchema } from './schemas';
 
 /**
  * User Aggregate
@@ -58,6 +58,12 @@ export class UserAggregate {
      * @param password string - Users password
      */
     async loginUser(email: string, password: string) {
+        // Check if user data is valid
+        const validationResult = Joi.validate({ email, password }, loginSchema);
+        if (validationResult.error) {
+            return false;
+        }
+
         const user = this.getUserByEmail(email);
         if (user === null) {
             return false;

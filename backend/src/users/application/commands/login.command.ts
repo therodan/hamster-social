@@ -30,6 +30,7 @@ export class LoginCommand implements IApplication {
             // Add user data to result to be returned
             result.data = {
                 id: user.id,
+                name: user.name,
                 email: user.email
             };
         }

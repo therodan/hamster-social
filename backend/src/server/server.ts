@@ -2,9 +2,10 @@ import * as express from 'express';
 import { Express } from 'express';
 import * as bodyParser from 'body-parser';
 import * as session from 'express-session';
+import * as morgan from 'morgan';
 
 import serverSettings from './settings';
-import { wildcardRouter, errorHandler, sessionRouter } from './routes';
+import { wildcardRouter, errorHandler, sessionRouter, usersRouter } from './routes';
 
 const app: Express = express();
 
@@ -12,6 +13,7 @@ const app: Express = express();
  * Middleware
  */
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(session({
     secret: serverSettings.secret,
     saveUninitialized: true,
@@ -24,11 +26,14 @@ app.use(session({
     },
     name: 'bid'
 }));
+app.use(morgan('combined'));
 
 /**
  * Routing
  */
 app.use(sessionRouter);
+
+app.use(usersRouter);
 
 // Handle all other routes
 app.use(wildcardRouter);

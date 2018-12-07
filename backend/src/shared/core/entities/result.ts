@@ -16,7 +16,7 @@ export class Result {
 
     addError(error: string | Error, code = 400) {
         if (error instanceof Error) {
-            this.errors.push({ code: 500, message: 'Internal server error' });
+            this.errors.push({ code, message: error.message });
         }
         else {
             const message = error as string;

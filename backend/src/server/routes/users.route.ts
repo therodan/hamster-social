@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { UsersRepository } from '../../users/infrastructure/repositories';
 import { getPostgresDB } from '../services';
 import { RegistrationCommand } from '../../users/application/commands';
@@ -6,7 +6,7 @@ import { RegistrationCommand } from '../../users/application/commands';
 export const usersRouter = Router();
 
 usersRouter.route('/users')
-    .post(async (req, res) => {
+    .post(async (req: Request, res: Response) => {
         const usersRepository = new UsersRepository(getPostgresDB());
         const registrationCommand = new RegistrationCommand(usersRepository);
 
@@ -17,6 +17,8 @@ usersRouter.route('/users')
             // Generate new session
             req['session'].regenerate((error) => {
                 if (error) {
+                    console.error(error);
+
                     return res.status(500).json({
                         code: 500,
                         msg: 'Internal server error',
@@ -25,7 +27,7 @@ usersRouter.route('/users')
                 }
 
                 // Save user in session
-                this.req['session'].user = result.data;
+                req['session'].user = result.data;
 
                 // Return response
                 return res.status(result.getStatusCode()).json({
@@ -43,4 +45,16 @@ usersRouter.route('/users')
                 data: result.data
             });
         }
+    });
+
+usersRouter.route('/users/me')
+    .get((req, res) => {
+        // Check for user in session otherwise send guest user
+        const user = typeof req['session'].user !== 'undefined' ? req['session'].user : {
+            id: null,
+            name: 'Guest',
+            email: 'guest@guest.com'
+        };
+
+        return res.json(user);
     });

@@ -1,5 +1,5 @@
 export function errorHandler(err, req, res, next) {
-    console.error(err);
+    console.error('ERROR', err);
 
     return res.status(500).json({
         code: 500,

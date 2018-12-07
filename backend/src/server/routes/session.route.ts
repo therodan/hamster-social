@@ -17,6 +17,8 @@ sessionRouter.route('/session')
             // Generate new session
             req['session'].regenerate((error) => {
                 if (error) {
+                    console.error(error);
+
                     return res.status(500).json({
                         code: 500,
                         msg: 'Internal server error',
@@ -25,7 +27,7 @@ sessionRouter.route('/session')
                 }
 
                 // Save user in session
-                this.req['session'].user = result.data;
+                req['session'].user = result.data;
 
                 // Return response
                 return res.status(result.getStatusCode()).json({

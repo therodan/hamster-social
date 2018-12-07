@@ -1,0 +1,12 @@
+<div class="body">
+    <form class="form-signin" [formGroup]="loginForm">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" formControlName="email" />
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" formControlName="password" />
+        <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+        <button class="btn btn-lg btn-primary btn-block" type="button" (click)="login()" [disabled]="loginForm.invalid">Sign in</button>
+        <p class="text-center"><a [routerLink]="['/register']">Register Here</a></p>
+    </form>
+</div>
