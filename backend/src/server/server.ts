@@ -5,7 +5,7 @@ import * as session from 'express-session';
 import * as morgan from 'morgan';
 
 import serverSettings from './settings';
-import { wildcardRouter, errorHandler, sessionRouter, usersRouter } from './routes';
+import { wildcardRouter, errorHandler, sessionRouter, usersRouter, postsRouter } from './routes';
 
 const app: Express = express();
 
@@ -32,8 +32,8 @@ app.use(morgan('combined'));
  * Routing
  */
 app.use(sessionRouter);
-
 app.use(usersRouter);
+app.use(postsRouter);
 
 // Handle all other routes
 app.use(wildcardRouter);
