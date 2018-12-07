@@ -17,11 +17,16 @@ export class PostsAggregate {
     /**
      * Get a list of posts
      */
-    getPosts() {
+    getPosts(): IPost[] {
         return this._posts;
     }
 
-    getPost(id: number) {
+    /**
+     * Get a single post
+     * @param id number - Post ID
+     */
+    getPost(id: number): IPost {
+        // Find post if exists
         const postIndex = this._posts.findIndex(post => post.id === id);
 
         if (postIndex === -1) {
@@ -39,14 +44,17 @@ export class PostsAggregate {
      * @returns boolean - whether the post is liked or unliked
      */
     toggleLikePost(postId: number, userId: number): boolean {
+        // Get post
         const post = this.getPost(postId);
         if (!post) {
             throw new Error('Post not found');
         }
+        // Check if same user
         else if (post.user_id === userId) {
             throw new Error('You cannot like your own post');
         }
 
+        // Check if currently liked
         const isLiked = post.likes.indexOf(userId);
         if (isLiked === -1) {
             // Like Post
@@ -78,7 +86,7 @@ export class PostsAggregate {
         const post: IPost = {
             id: null,
             date: new Date().toISOString(),
-            content: sanitizeHtml(content),
+            content: sanitizeHtml(content), // Sanitize HTML for safety
             user_id: userId,
             likes: []
         };

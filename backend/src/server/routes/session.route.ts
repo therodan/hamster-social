@@ -6,6 +6,7 @@ import { LoginCommand } from '../../users/application/commands';
 export const sessionRouter = Router();
 
 sessionRouter.route('/session')
+    // Login
     .post(async (req, res) => {
         const usersRepository = new UsersRepository(getPostgresDB());
         const loginCommand = new LoginCommand(usersRepository);
@@ -48,8 +49,10 @@ sessionRouter.route('/session')
     });
 
 sessionRouter.route('/session/logout')
+    // Logout
     .post((req, res) => {
         if (req['session'].user) {
+            // Clear session
             req['session'].destroy((err) => {
                 if (err) {
                     return res.status(500).json({

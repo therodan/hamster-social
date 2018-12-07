@@ -17,7 +17,12 @@ export class UserAggregate {
         this._users = users;
     }
 
+    /**
+     * Get User by their email address
+     * @param email string - Users email address
+     */
     getUserByEmail(email: string) {
+        // Check for user by comparing email addresses
         const userIndex = this._users.findIndex(user => user.email === email);
 
         if (userIndex === -1) {

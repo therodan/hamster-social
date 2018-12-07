@@ -6,8 +6,11 @@ import { PostsController } from '../../posts/application/posts.controller';
 export const postsRouter = Router();
 
 postsRouter.route('/posts')
+    // Get list of posts
     .get(async (req, res) => {
+        // Get user from session
         const userId = typeof req['session'].user !== 'undefined' ? +req['session'].user.id : null;
+        // Setup controller
         const postsRepository = new PostsRepository(getPostgresDB());
         const postsController = new PostsController(postsRepository);
 
@@ -20,8 +23,11 @@ postsRouter.route('/posts')
             data: result.data
         });
     })
+    // Create a new post
     .post(async (req, res) => {
+        // Get user from session
         const userId = typeof req['session'].user !== 'undefined' ? +req['session'].user.id : null;
+        // Setup controller
         const postsRepository = new PostsRepository(getPostgresDB());
         const postsController = new PostsController(postsRepository);
 
@@ -39,8 +45,11 @@ postsRouter.route('/posts')
     });
 
 postsRouter.route('/posts/:id/like')
+    // Toggle liking a post
     .post(async (req, res) => {
+        // Get user from session
         const userId = typeof req['session'].user !== 'undefined' ? +req['session'].user.id : null;
+        // Setup controller
         const postsRepository = new PostsRepository(getPostgresDB());
         const postsController = new PostsController(postsRepository);
 

@@ -6,6 +6,7 @@ import { RegistrationCommand } from '../../users/application/commands';
 export const usersRouter = Router();
 
 usersRouter.route('/users')
+    // Registration
     .post(async (req: Request, res: Response) => {
         const usersRepository = new UsersRepository(getPostgresDB());
         const registrationCommand = new RegistrationCommand(usersRepository);
@@ -48,6 +49,7 @@ usersRouter.route('/users')
     });
 
 usersRouter.route('/users/me')
+    // Get currently logged in user
     .get((req, res) => {
         // Check for user in session otherwise send guest user
         const user = typeof req['session'].user !== 'undefined' ? req['session'].user : {
